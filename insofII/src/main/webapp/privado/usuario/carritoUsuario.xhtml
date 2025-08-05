@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantillaBase.xhtml">
+
+            <ui:define name="top">
+                <ui:define name="title">
+                    Mis Envíos
+                </ui:define>
+            </ui:define>
+
+            <ui:define name="content">
+                <h1>Carrito de Compras</h1>
+                <h:panelGroup rendered="#{carritoControlador.carrito != null}">
+                    <h:outputText value="Coste Total: #{carritoControlador.carrito.costeTotal}" />
+                    <h:dataTable value="#{carritoControlador.productList}" var="producto">
+                        <h:column>
+                            <f:facet name="header">Producto</f:facet>
+                            <h:outputText value="#{producto.nombre}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Precio</f:facet>
+                            <h:outputText value="#{producto.precio}" />
+                        </h:column>
+                    </h:dataTable>
+                    <h:form id="formCarrito">
+                        <p:commandButton value="Eliminar Carrito" icon="pi pi-trash"
+                                         action="#{carritoControlador.eliminarCarrito()}"
+                                         ajax="false" />
+                        <p:commandButton value="Comprar" action="#{carritoControlador.comprarCarrito()}" 
+                                         process="@form" update="@form :growl" />
+
+                    </h:form>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{carritoControlador.carrito == null}">
+                    <h:outputText value="El carrito está vacío." />
+                </h:panelGroup>
+
+                <!-- Growl para mostrar mensajes -->
+                <p:growl id="growl" showDetail="true" life="3000" />
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

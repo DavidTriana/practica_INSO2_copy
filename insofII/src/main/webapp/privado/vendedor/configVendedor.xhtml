@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Vendedor</title>
+        <h:outputStylesheet library="css" name="header.css"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../../WEB-INF/template/plantillaVendedor.xhtml">
+
+            <ui:define name="top">
+
+            </ui:define>
+            <ui:define name="content">
+
+                <h:form id="userForm">
+                    <p:growl id="messages" showDetail="true" />
+
+                    <p:panel header="Configuración" style="margin-bottom:20px;">
+                        <p:tabView>
+                            <p:tab title="Información Personal">
+                                <p:panelGrid columns="2" columnClasses="label,value">
+                                    <h:outputLabel for="name" value="Nombre:" />
+                                    <p:inputText id="name" value="#{ConfigVendedorControlador.vendedor.nombre}" label="Nombre" />
+
+                                    <h:outputLabel for="email" value="Email:" />
+                                    <p:inputText id="email" value="#{ConfigVendedorControlador.vendedor.email}" label="Email" />
+
+                                    <h:outputLabel for="address" value="Teléfono" />
+                                    <p:inputText id="phone" value="#{ConfigVendedorControlador.vendedor.telefono}" />
+                                </p:panelGrid>
+                            </p:tab>
+
+                            <p:tab title="Seguridad">
+                                <p:panelGrid columns="2" columnClasses="label,value">
+                                    <h:outputLabel for="password" value="Nueva contraseña:" />
+                                    <p:password id="password" value="#{ConfigVendedorControlador.contraseñaNueva}" feedback="true" label="Contraseña" />
+
+                                    <h:outputLabel for="confirmPassword" value="Confirmar Contraseña:" />
+                                    <p:password id="confirmPassword" value="#{ConfigVendedorControlador.contraseñaConfirmada}" label="Confirmar Contraseña" />
+                                </p:panelGrid>
+                                
+                                <p:commandButton value="Borrar cuenta" action="#{ConfigVendedorControlador.eliminarCuenta}" />
+                                
+                            </p:tab>
+
+                            <p:tab title="Información de Pago">
+                                <p:panelGrid columns="2" columnClasses="label,value">
+                                    <h:outputLabel for="cardNumber" value="Número de cuenta" />
+                                    <p:inputText id="cardNumber" value="#{ConfigVendedorControlador.vendedor.tarjetaBanco}" label="Número de Tarjeta" />
+                                </p:panelGrid>
+                            </p:tab>
+                        </p:tabView>
+                    </p:panel>
+
+                    <p:commandButton value="Guardar" action="#{ConfigVendedorControlador.guardarInformacion}" update="messages" />
+                    
+                    <p:confirmDialog widgetVar="dlg" id="confirmDialog">
+                        <p>Las contraseñas introducidas no coinciden. Se mantendrá la contraseña anterior.</p>
+                        <p:commandButton value="Aceptar" action="#{ConfigVendedorControlador.handleConfirm}" onclick="PF('dlg').hide();" />
+                    </p:confirmDialog>
+                    
+                    <p:confirmDialog widgetVar="dlgExito" id="confirmDialogExito">
+                        <p>Se ha actualizado tu cuenta.</p>
+                        <p:commandButton value="Aceptar" action="#{ConfigVendedorControlador.handleConfirm}" onclick="PF('dlg').hide();" />
+                    </p:confirmDialog>
+                    
+                    <p:confirmDialog widgetVar="dlgEliminar" id="confirmDialogEliminar">
+                        <p>Se ha eliminado tu cuenta</p>
+                        <p:commandButton value="Aceptar" action="#{ConfigVendedorControlador.logOut}" onclick="PF('dlg').hide();" />
+                    </p:confirmDialog>
+                    
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

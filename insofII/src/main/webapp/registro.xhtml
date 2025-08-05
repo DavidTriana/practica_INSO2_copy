@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Registro de Usuario</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel header="Seleccione tipo de usuario">
+                <p:selectOneMenu value="#{registerControlador.tipoUsuario}">
+                    <f:selectItem itemLabel="Seleccione un tipo de usuario" itemValue="" />
+                    <f:selectItem itemLabel="Usuario estándar" itemValue="normal" />
+                    <f:selectItem itemLabel="Vendedor" itemValue="vendedor" />
+                    <p:ajax update="formularioRegistro" />
+                </p:selectOneMenu>
+            </p:panel>
+
+            <h:panelGroup id="formularioRegistro">
+                <p:panel rendered="#{registerControlador.tipoUsuario eq 'normal'}" header="Registro de Usuario Normal">
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank" id="grid">
+                        <p:outputLabel value="Nombre de usuario" for="txtNombre"/>
+                        <p:inputText value="#{registerControlador.nombreUsuario}" required="true" requiredMessage="Nombre es un campo obligatorio" id="txtNombre" maxlength="45"/>
+                        <p:message for="txtNombre" display="text" />
+
+                        <p:outputLabel value="Teléfono" for="txtTelefono"/>
+                        <p:inputText value="#{registerControlador.telefonoUsuario}" required="true" requiredMessage="Telefono es un campo obligatorio" id="txtTelefono" maxlength="45"/>
+                        <p:message for="txtTelefono" display="text" />
+
+                        <p:outputLabel value="Email de contacto" for="txtEmail"/>
+                        <p:inputText value="#{registerControlador.emailUsuario}" required="true" requiredMessage="Email es un campo obligatorio" id="txtEmail"  maxlength="45"/>
+                        <p:message for="txtEmail" display="text" />
+
+                        <p:outputLabel value="Contraseña" for="txtContrasenia"/>
+                        <p:password value="#{registerControlador.contraseniaUsuario}" required="true" requiredMessage="Contraseña es un campo obligatorio" id="txtContrasenia" feedback="true" promptLabel="Ingresa tu contraseña" weakLabel="Débil"
+                                    goodLabel="Buena" strongLabel="Fuerte" toggleMask="true" redisplay="true" maxlength="45"/>
+                        <p:message for="txtContrasenia" display="text" />
+
+                        <p:outputLabel value="Dirección " for="txtDireccion"/>
+                        <p:inputText value="#{registerControlador.direccionUsuario}" required="true" requiredMessage="Dirección es un campo obligatorio" id="txtDireccion" maxlength="45"/>
+                        <p:message for="txtDireccion" display="text" />
+                        <p:outputLabel value="Tarjeta bancaria" for="txtTarjeta"/>
+                        <p:inputText value="#{registerControlador.tarjetaBancoUsuario}" required="true" requiredMessage="Numero de tarjeta es un campo obligatorio" id="txtTarjeta" maxlength="45"/>
+                        <p:message for="txtTarjeta" display="text" />
+                    </p:panelGrid>
+                    <p:commandButton id="submitButtonUsuario" update="grid" value="Insertar" action="#{registerControlador.registrarUsuario()}"/>
+                </p:panel>
+
+
+                <p:panel rendered="#{registerControlador.tipoUsuario eq 'vendedor'}" header="Registro de Vendedor">
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank" id="gridVendedor">
+                        <p:outputLabel value="Nombre de usuario" for="txtNombreVendedor"/>
+                        <p:inputText value="#{registerControlador.nombreVendedor}" required="true" requiredMessage="Nombre es un campo obligatorio" id="txtNombreVendedor" />
+                        <p:message for="txtNombreVendedor" display="text" />
+
+                        <p:outputLabel value="Teléfono" for="txtTelefonoVendedor"/>
+                        <p:inputText value="#{registerControlador.telefonoVendedor}" required="true" requiredMessage="Telefono es un campo obligatorio" id="txtTelefonoVendedor"/>
+                        <p:message for="txtTelefonoVendedor" display="text" />
+
+                        <p:outputLabel value="Email" for="txtEmailVendedor"/>
+                        <p:inputText value="#{registerControlador.emailVendedor}" required="true" requiredMessage="Email es un campo obligatorio" id="txtEmailVendedor"/>
+                        <p:message for="txtEmailVendedor" display="text" />
+
+                        <p:outputLabel value="Contraseña" for="txtContraseniaVendedor"/>
+                        <p:password value="#{registerControlador.contraseñaVendedor}" required="true" requiredMessage="Contraseña es un campo obligatorio" id="txtContraseniaVendedor" feedback="true" promptLabel="Ingresa tu contraseña" weakLabel="Débil"
+                                    goodLabel="Buena" strongLabel="Fuerte" toggleMask="true" redisplay="true"/>
+                        <p:message for="txtContraseniaVendedor" display="text" />
+
+                        <p:outputLabel value="Cuenta bancaria" for="txtTarjetaVendedor"/>
+                        <p:inputText value="#{registerControlador.tarjetaBancoVendedor}" required="true" requiredMessage="Numero de tarjeta es un campo obligatorio" id="txtTarjetaVendedor"/>
+                        <p:message for="txtTarjetaVendedor" display="text" />
+                    </p:panelGrid>
+                    <p:commandButton id="submitButtonVendedor" update="gridVendedor" value="Insertar" action="#{registerControlador.registrarUsuario()}"/>
+                </p:panel>
+
+            </h:panelGroup>
+            <div class="register-link">
+                <h:outputText value="¿Ya tienes cuenta?"/>
+                <a href="faces/login.xhtml" class="button-link">Iniciar sesión</a>
+            </div>
+        </h:form>
+    </h:body>
+</html>

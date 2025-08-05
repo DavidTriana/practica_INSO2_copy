@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13-jun-2024, 16:51:26
+    Author     : gueps
+*/
+
+
+.top-content {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    height: 60px;
+}
+
+.top-left {
+    flex: 1; 
+}
+
+.top-center {
+    flex: 1; 
+    text-align: center; 
+}
+
+.top-right {
+    flex: 1; 
+    text-align: right; 
+}
+
+.datos-usuario {
+    margin: 0 auto;
+    width: 50%; 
+    border: 1px solid #ccc; 
+    padding: 20px; 
+}
+
+/* Estilos para centrar el diálogo */
+.ui-dialog-content {/* Centra el contenido del diálogo */
+}
+
+

@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                padding: 0;
+            }
+
+            .login-container {
+                margin: 100px auto;
+                max-width: 600px; /* Ajusta el ancho máximo según tus necesidades */
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .login-title {
+                text-align: center;
+                color: #333;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .login-form .ui-panelgrid-cell {
+                padding: 10px 0;
+            }
+
+            .login-form .ui-panelgrid-cell label {
+                font-weight: bold;
+                width: 100px; /* Ajustar el ancho del label */
+                display: inline-block;
+            }
+
+            .login-form .ui-panelgrid-cell .ui-inputfield {
+                width: 100%
+            }
+
+            .login-form .login-button {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .register-link {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .button-link {
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="login-container">
+            <h:form id="formLogin" styleClass="login-form">
+                <h2 class="login-title">Inicio de Sesión</h2>
+                <p:panelGrid columns="3" styleClass="ui-panelgrid-blank" id="gridLogin">
+                    <p:outputLabel value="Email:" for="txtNombre"/>
+                    <p:inputText value="#{loginControlador.usuario.email}" required="true" requiredMessage="Es necesario introducir el email" id="txtNombre"/>
+                    <p:message for="txtNombre" display="text"/>
+
+                    <p:outputLabel value="Contraseña:" for="txtContrasenia"/>
+                    <p:password value="#{loginControlador.usuario.contrasenia}" required="true" requiredMessage="Es necesario introducir la contraseña" id="txtContrasenia"/>
+                    <p:message for="txtContrasenia" display="text"/>
+                </p:panelGrid>
+                <p:commandButton styleClass="login-button" id="submitButton" update="formLogin msgWarning" value="Iniciar sesión" action="#{loginControlador.verificarUsuario()}"/>
+
+                <p:messages id="msgWarning" severity="warn"  showSummary="true" showDetail="true"/>
+
+                <div class="register-link">
+                    <h:outputText value="¿No tienes cuenta?"/>
+                    <a href="faces/registro.xhtml" class="button-link">Registrarse</a>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>

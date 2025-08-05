@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Acceso Denegado</title>
+        <meta charset="UTF-8" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel header="Acceso Denegado">
+                <h:outputText value="No tienes permisos para acceder a esta página." />
+                <br /><br />
+                <p:commandButton value="Iniciar Sesión" action="login.xhtml?faces-redirect=true" icon="pi pi-user" />
+                <br /><br />
+                <p:commandButton value="Registrarse" action="registro.xhtml?faces-redirect=true" icon="pi pi-pencil" />
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

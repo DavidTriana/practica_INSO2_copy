@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="./../../WEB-INF/template/plantillaBase.xhtml">
+
+        <ui:define name="title">
+            Productos Disponibles
+        </ui:define>
+
+        <ui:define name="top">
+            <h1>Lista de Productos</h1>
+        </ui:define>
+
+        <ui:define name="content">
+            
+            <p:growl id="growl" showDetail="true" life="3000" />
+            
+            <h:form id="productForm">
+                <p:dataTable var="producto" value="#{productosGeneralControlador.obtenerListaProductosDisponibles()}" widgetVar="productosTable"
+                             emptyMessage="No existen productos con estas especificaciones"
+                             filteredValue="#{productosGeneralControlador.filteredProductos}" paginator="true" rows="10"
+                             selectionMode="single" selection="#{productosGeneralControlador.productoSeleccionado}" rowKey="#{producto.idProducto}">
+
+                    <p:ajax event="rowSelect" listener="#{productosGeneralControlador.onRowSelect}" oncomplete="PF('dlgProducto').show();" update=":productForm:dialogProducto"/>
+
+                    <f:facet name="header">
+                        <div class="flex align-items-center justify-content-between">
+                            <span>Buscar productos</span>
+                            <div>
+                                <p:inputText id="globalFilter" onkeyup="PF('productosTable').filter()" style="width:20rem"
+                                             placeholder="Introduce busqueda" maxlength="45"/>
+                                <p:commandButton value="Buscar" update="@form" styleClass="ml-2"
+                                                 action="#{productosGeneralControlador.toggleGlobalFilter()}"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+
+
+                    <p:column headerText="Nombre" sortBy="#{producto.nombre}" filterBy="#{producto.nombre}" filterMatchMode="contains">
+                        <h:outputText value="#{producto.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Marca" sortBy="#{producto.marca}" filterBy="#{producto.marca}">
+                        <h:outputText value="#{producto.marca}" />
+                    </p:column>
+
+                    <p:column headerText="Categoría" sortBy="#{producto.categoria}" filterBy="#{producto.categoria}">
+                        <h:outputText value="#{producto.categoria}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción" sortBy="#{producto.descripcion}" filterBy="#{producto.descripcion}">
+                        <h:outputText value="#{producto.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Precio" sortBy="#{producto.precio}" filterBy="#{producto.precio}">
+                        <h:outputText value="#{producto.precio}" >
+                            <f:convertNumber currencySymbol="€" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Vendedor" sortBy="#{producto.vendedores.nombre}" filterBy="#{producto.vendedores.nombre}">
+                        <h:outputText value="#{producto.vendedores.nombre != null ?  producto.vendedores.nombre : 'Ya no existe esta cuenta'}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Información del Producto" widgetVar="dlgProducto" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dialogProducto"
+                          style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; max-width: 90%;">
+                    <p:outputPanel id="productDetail" style="text-align:center;">
+                        <p:column rendered="#{not empty productosGeneralControlador.productoSeleccionado}">
+                            <div class="product">
+                                <div class="product-grid-item border-0" style="margin-bottom: 0">
+                                    <div class="product-grid-item-top">
+                                        <div>
+                                            <i class="pi pi-tag product-category-icon"/>
+                                            <span class="product-category">#{productosGeneralControlador.productoSeleccionado.categoria != null ? productosGeneralControlador.productoSeleccionado.categoria : 'Sin Categoría'}</span>
+                                        </div>  
+                                    </div>
+                                    <div class="product-grid-item-content"  style="line-height: 2;">
+                                        <div class="product-name" style="font-weight: bold;">#{productosGeneralControlador.productoSeleccionado.nombre}</div>
+                                        <div class="product-description">#{productosGeneralControlador.productoSeleccionado.descripcion != null ? productosGeneralControlador.productoSeleccionado.descripcion : 'Sin Descripcion'}</div>
+                                        <p:rating value="#{productosGeneralControlador.productoSeleccionado.valoraciones}" readonly="true" id="rating"></p:rating>
+                                    </div>
+
+                                    <p:panel id="panelValoraciones" toggleable="true" header="Valoraciones" collapsed="true">
+                                        <p:dataTable var="valoracion" value="#{productosGeneralControlador.valoracionesProductoSeleccionado}" widgetVar="valoracionTable"
+                                                     emptyMessage="Este producto aun no tiene valoraciones"
+                                                     paginator="true" paginatorPosition="bottom" rows="2">
+
+                                            <p:column headerText="Usuario">
+                                                <h:outputText value="#{valoracion.idUsuario.nombre != null ?  valoracion.idUsuario.nombre  : 'Ya no existe esta cuenta'}" />
+                                            </p:column>
+
+                                            <p:column headerText="Fecha y Hora">
+                                                <h:outputText value="#{valoracion.fecha} #{valoracion.hora}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Puntuación">
+                                                <p:rating value="#{valoracion.valoracion}" readonly="true"/>
+                                            </p:column>
+
+                                            <p:column headerText="Texto">
+                                                <h:outputText  value="#{valoracion.descripcion}"  />
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </p:panel>
+                                    <div class="product-grid-item-bottom"  style="margin-top: 1rem;">
+                                        <h:outputText value="#{productosGeneralControlador.productoSeleccionado.precio}"
+                                                      styleClass="product-price" style="margin-right: 1rem;">
+                                            <f:convertNumber currencySymbol="€" type="currency"/>
+                                        </h:outputText>
+                                        <p:commandButton value="Añadir a carrito"
+                                                         icon="pi pi-shopping-cart"  style="margin-left: 1rem;"
+                                                         action="#{productosGeneralControlador.anadirProductoACarrito()}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:outputPanel>
+
+
+                </p:dialog>
+
+
+            </h:form>
+        </ui:define>
+
+       
+    </ui:composition>
+
+</html>
