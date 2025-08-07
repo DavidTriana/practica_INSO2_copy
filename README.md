@@ -1,31 +1,31 @@
-# 🛍️ Aplicación Web de Ventas Online - Proyecto Universitario
+# 🛍️ Online Store Web Application - University Project
 
-Esta es una aplicación web desarrollada en **Java** utilizando el framework **PrimeFaces**, que simula una tienda online.  
-El proyecto fue desarrollado con fines académicos como parte de un trabajo universitario.  
+This is a web application developed in **Java** using the **PrimeFaces** framework, which simulates an online shop application.  
+The project was created purely for academic purposes as part of a university assignment.  
 
-## 📌 Descripción
+## 📌 Overview
 
-La aplicación permite la interacción entre **usuarios** y **vendedores**, cada uno con funcionalidades específicas.  
-Se implementa un sistema de autenticación (login) para gestionar los diferentes roles.  
+The application supports interactions between two types of users: **customers** and **sellers**, each with their own set of features.  
+It includes a login system to manage access and permissions.  
 
-### Funcionalidades principales
+### Main Features
 
-#### 👤 Usuarios
-- Registrarse e iniciar sesión.
-- Explorar productos disponibles.
-- Agregar productos al carrito.
-- Realizar compras.
-- Agregar reseñas (reviews) a los productos.
+#### 👤 Customers
+- Register and log in.
+- Browse available products.
+- Add products to the shopping cart.
+- Make purchases.
+- Leave reviews on products.
 
-#### 🛒 Vendedores
-- Iniciar sesión como vendedor.
-- Crear, editar y eliminar productos.
-- Visualizar información y estadísticas sobre sus ventas.
+#### 🛒 Sellers
+- Log in as a seller.
+- Create, edit, and delete products.
+- View sales data and performance statistics.
 
-## 🛠️ Tecnologías utilizadas
+## 🛠️ Technologies Used
 
 - **Java** (Backend)
-- **PrimeFaces** (Framework JSF para la capa de vista)
-- **HTML/CSS** (Frontend)
-- **JavaServer Faces (JSF)**
-- **Base de datos relacional** (MySQL)
+- **PrimeFaces** (UI framework for JSF)
+- **JavaServer Faces (JSF)** - for building component-based UIs
+- **HTML/CSS**
+- **Relational Database** (MySQL)
